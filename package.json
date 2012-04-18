@@ -1,0 +1,13 @@
+{
+  "name": "monglow",
+  "version": "0.0.1",
+  "description": "another ODM for MongoDB",
+  "keywords": ["mongo", "mongodb"],
+  "author": "Jonathan Spies <jonathan.spies@gmail.com>",
+  "dependencies": {
+    "mongolian": "*",
+    "klass": "*"
+  },
+  "main": "index",
+  "engines": { "node": ">= 0.4.x" }
+}
