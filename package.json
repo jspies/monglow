@@ -8,6 +8,9 @@
     "mongolian": "*",
     "klass": "*"
   },
+  "devDependencies": {
+    "should": "*"
+  },
   "main": "index",
   "engines": { "node": ">= 0.4.x" }
 }

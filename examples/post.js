@@ -1,4 +1,5 @@
-var Monglow = require("../lib/monglow");
+var Monglow = require("../lib/monglow")
+Monglow.connect("mongo://127.0.0.1:27017/monglow_test");
 
 var Author = Monglow.model("authors");
 var Post = Monglow.model('posts');
@@ -14,11 +15,10 @@ Post.staticMethod("test passed");
 
 
 var posts = Post.find(function(err, items) {
-  console.log(items)
-  if (items.length > 0) {
-    items[0].name="title2";
+  if (items.length > 1) {
+    items[0].name = "title2";
     items[0].save(function(err) {
-      items[0].remove();
+      items[1].remove();
     });
   }
 });
