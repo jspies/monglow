@@ -23,6 +23,7 @@ var Post = Monglow.model('posts');
 Done. Seriously. But you can do more if you want.
 
 Like add a static finder.
+
 ```javascript
 Post.find_by_custom_stuff = function(callback) {
   this.find({stuff: "custom"}, callback);
@@ -30,6 +31,7 @@ Post.find_by_custom_stuff = function(callback) {
 ```
 
 Then you can use the model.
+
 ```javascript
 var post = Post.new({name: "Jonathan"});
 post.save();
@@ -44,6 +46,7 @@ Post.find(function(err, posts) {
   posts[0].save({name: "not Spies"});
 });
 ```
+
 Relationships
 -------------
 ```javascript
