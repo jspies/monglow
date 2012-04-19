@@ -2,11 +2,15 @@ Mongolian = require("mongolian")
 
 #--------- Model ------------
 class MonglowModel
+  constructor: ->
+    # hide our pretty properties
+    Object.defineProperty(this, "model_name", {enumerable:false})
+    Object.defineProperty(this, "client", {enumerable:false})
+    Object.defineProperty(this, "references_many", {enumerable:false})
 
-
-  this.references_many = (ref_name) ->
-    @many_references = [] if !@many_references
-    @many_references.push(ref_name)
+  #this.references_many = (ref_name) ->
+  #  @many_references = [] if !@many_references
+  #  @many_references.push(ref_name)
 
   this.find = (callback) ->
     self = this
@@ -20,23 +24,13 @@ class MonglowModel
         callback(err, objects) if callback
       )
 
-Object.defineProperty(MonglowModel.prototype, "constructor", {
-  value: -> 
-    this.restrictedFields = []
-
-    # hide our pretty properties
-    Object.defineProperty(this, "restrictedFields", {enumerable:false})
-    Object.defineProperty(this, "model_name", {enumerable:false})
-    Object.defineProperty(this, "client", {enumerable:false})
-  })
-
 Object.defineProperty(MonglowModel.prototype, "save", {
     value: (attributes, callback) ->
       self = this
       if typeof attributes == "function"
         callback = attributes
 
-      this.client.collection(@model_name).save @fields(), (err, result) ->
+      this.client.collection(@model_name).save @, (err, result) ->
         if err
         else
           #result._id = result._id.toString()
@@ -76,7 +70,7 @@ class Monglow
   close: ->
     this.Client.close()
 
-  model: (name) ->
+  model: (name, options) ->
     that = this
     model_name = name
   
@@ -84,10 +78,17 @@ class Monglow
       @model_name = name
       @client = that.Client
       @model = Model
+      @references_many = options.references_many if options
 
       constructor: (params) ->
         @model_name = model_name
         @client = that.Client
+        @references_many = options.references_many if options
+
+        if @references_many
+          for ref in @references_many
+            this[ref] = new MonglowRelation
+            Object.defineProperty(this, ref, {enumerable:false})
         
         for name, value of params
           if !this[name]
@@ -95,8 +96,20 @@ class Monglow
 
         super(params)
 
-        
+    Object.defineProperty(Model.prototype, 'constructor', {enumerable:false})
 
     return Model
+
+class MonglowRelation
+  constructor: ->
+    @ids = []
+    @all = []
+
+Object.defineProperty(MonglowRelation.prototype, 'push', {
+    enumerable: false,
+    value: (object)->
+      @ids.push object._id
+      @all.push object
+  })
 
 module.exports = new Monglow
