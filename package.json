@@ -11,6 +11,6 @@
   "devDependencies": {
     "should": "*"
   },
-  "main": "index",
+  "main": "monglow",
   "engines": { "node": ">= 0.4.x" }
 }

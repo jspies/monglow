@@ -17,9 +17,9 @@ Post.staticMethod("test passed");
 var author = new Author({name: "Jonathan"})
 author.save();
 
-var posts = Post.find(function(err, items) {
+var posts = Post.find({name: "title"}, function(err, items) {
+  console.log(items)
   if (items.length > 10) {
-    
     
     items[0].save(function(err) {
       items[1].remove();
@@ -30,6 +30,9 @@ var posts = Post.find(function(err, items) {
 var post = new Post({name: "first title", body: "I wrote this"});
 post.save();
 post.authors.push(author); // TODO: make enumerating produce authors.ids so it will save
+
+var post = new Post({name: "title", body: "I wrote this"});
+post.save();
 
 //var second_post = Post.new({title: "This is my title!", body:"I am writer!"}); // this should work
 
