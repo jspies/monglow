@@ -33,7 +33,7 @@ Post.find_by_custom_stuff = function(callback) {
 Then you can use the model.
 
 ```javascript
-var post = Post.new({name: "Jonathan"});
+var post = new Post({name: "Jonathan"});
 post.save();
 post.remove();
 Post.create({name: "not Jonathan"});
