@@ -14,5 +14,15 @@ describe("MonglowModel", function() {
       });
     })
 
+  });
+
+  describe("this.save()", function() {
+    it("should not save functions", function(done) {
+      
+    });
+
+    it("should persist a document", function(done) {
+
+    });
   })
 });
